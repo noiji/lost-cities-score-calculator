@@ -8,17 +8,17 @@
     </div>
     <div id = "cards">
       <ul>
-        <li v-if="investcard[0].display" >
+        <li v-if="investcard[0].display" @click="updateInvestCard(0)">
           <a href="">
             {{ investcard[0].name }}
           </a>
         </li>
-        <li v-if="investcard[1].display">
+        <li v-if="investcard[1].display" @click="updateInvestCard(1)">
           <a href="">
             {{ investcard[1].name }}
           </a>
         </li>
-        <li v-if="investcard[2].display">
+        <li v-if="investcard[2].display" @click="updateInvestCard(2)">
           <a href="">
             {{ investcard[2].name }}
           </a>
@@ -75,16 +75,25 @@ export default {
 
     },
     updateSumScore(x){
-      this.sumscore += x
+      this.sumscore += x;
+      console.log("sumscore: ", this.sumscore);
     },
-    updateInvestCard(){ //앞 또는 뒤 카드의 display를 변경해줘야 한다.
-      if (!this.on){
-        this.on = true;
-        this.updateSumScore(this.value)
+    updateInvestCard(x){ //앞 또는 뒤 카드의 display를 변경해줘야 한다.
+      if (!this.investcard[x].on){
+        this.investcard[x].on = true;
+        console.log("invest card: ", this.investcard[x].id);
+        if (x < 2){
+          console.log(this.investcard[this.id + 1]);
+          this.investcard[x + 1].display = true;
+        }
       }
       else {
-        this.on = false;
-        this.updateSumScore(this.value * (-1))
+        this.investcard[x].on = false;
+        console.log("invest card: ", this.investcard[x].id);
+        if (x > 0){
+          console.log(this.investcard[this.id - 1]);
+          this.investcard[x - 1].display = false;
+        }
       }
     },
     updateNumCard(){
