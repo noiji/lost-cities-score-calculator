@@ -1,0 +1,13 @@
+body {
+    background-color: black;
+    color: white;
+    font-family: Special Elite;
+}
+@media screen and (prefers-color-scheme: light) {
+    body {
+        background-color: white;
+        color: black;
+    }
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Carter+One&family=Lobster&family=Pacifico&family=Permanent+Marker&family=Special+Elite&display=swap');
