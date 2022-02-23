@@ -3,7 +3,7 @@
   <div id = "section" :style="cssProps">
 
     <div id = "cardtitle">
-     <h3>{{ singleColor.name }}</h3>
+     <h3>{{ singleColor.name }} : {{singleColor.score}}</h3>
     </div>
     <div id = "cards">
       <ul>
@@ -140,7 +140,7 @@ export default {
   color: var(--title-color);
 }
 #cards{
-  padding-bottom: 15px;
+  padding-bottom: 4px;
 }
 #cards ul{
   list-style-type: none;
@@ -150,11 +150,11 @@ export default {
 #cards button{
   float: left; /*  리스트를 가로로 정렬*/
   border-color: var(--card-color);
-  padding: 10px;
+  padding: 8px;
   font-family: "Special Elite";
   border-radius: 20%;
-  margin: 3px;
-  font-size: 20px;
+  margin: 1px;
+  font-size: 15px;
 }
 #cards button:not(.clickedButton){
   background-color: black;
@@ -167,6 +167,9 @@ export default {
 }
 #cards li a:hover {
   background-color: white;
+}
+#cardtitle{
+  font-size: 15px;
 }
 .clickedButton{
   background-color: var(--card-color);
