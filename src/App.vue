@@ -31,7 +31,7 @@
         <span class="versus">vs</span>
         <span class="roundScore">{{players[1].score[roundIdx]}}</span>
         <br>
-        <button v-if="roundIdx < 4" @click="nextRound">NEXT ROUND</button>
+        <button id="nextButton" v-if="roundIdx < 4" @click="nextRound">NEXT ROUND</button>
       </div>
     </div>
     <div id="totalresult">
@@ -43,6 +43,9 @@
 <script>
 import AllCards from "@/components/AllCards";
 import Scoreboard from "@/components/Scoreboard";
+import JSConfetti from 'js-confetti'
+
+const confetti = new JSConfetti()
 
 export default {
   name: 'App',
@@ -84,16 +87,20 @@ export default {
     showRoundResult(){
       this.roundResultShown = !this.roundResultShown
       this.roundWinner = this.calRoundWinner()
+      this.showConfetti()
+      //TODO: update to scoreboard
     },
     initRound(){
       this.roundResultShown = false
-      //클릭된 카드 클릭 해제
-
+      //TODO: 클릭된 카드 클릭 해제
     },
     nextRound(){
       this.roundIdx++
       this.initRound()
-    }
+    },
+    showConfetti() {
+      confetti.addConfetti({emojis: ['🌈', '🦄️', '✨', '💫',],})
+    },
   },
   computed:{
 
@@ -104,6 +111,7 @@ export default {
 <style >
 @import './style.css';
 body{
+  width: 520px;
   float: left;
 }
 #app {
@@ -146,6 +154,8 @@ body{
 
 #result{
   min-height: 80px;/*display: block;*/
+  padding: 10px 80px;
+  align-items: center;
 }
 .roundScore{
   font-size: 80px;
@@ -156,5 +166,13 @@ body{
 #player1, #player2{
   font-size: 12px;
   padding: 0 0 15px 0;
+}
+#showResultButton, #nextButton{
+  width: 160px;
+  background-color: dodgerblue;
+  height: 30px;
+  font-family: "Special Elite";
+  color: white;
+  font-weight: bold;
 }
 </style>
