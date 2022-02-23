@@ -2,12 +2,10 @@
   <div>
     <div v-if="isExpand">
       <Cards v-for="cardStack in allColor" :key = "cardStack" :single-color="cardStack"
-             @updateSingle="updateParentSingle"
              @change="updatePlayerScore"></Cards>
     </div>
     <div v-else>
       <Cards v-for="cardStack in allColor.slice(0, 5)" :key = "cardStack" :single-color="cardStack"
-             @updateSingle="updateParentSingle"
              @change="updatePlayerScore"></Cards>
     </div>
   </div>

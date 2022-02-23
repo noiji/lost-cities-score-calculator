@@ -10,7 +10,6 @@
       <div id = "player1">
         <h1>Player 1</h1>
         <AllCards :player-idx = 0 @playerScore = "calParentPlayerScore"></AllCards>
-        <p :key = players>{{players[0].score[roundIdx]}}</p>
       </div>
       <div id = "player2">
         <h1>Player 2</h1>

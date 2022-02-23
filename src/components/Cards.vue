@@ -62,16 +62,21 @@ export default {
             {value: 10, name: '10', on: false,},
       ],
       // numcardcnt: this.calNumCardCnt, //
-      totalcardcnt: this.calTotalCardCnt, //필요 1. default 점수 0 또는 -20 중 선택 2. 8개 카드 이상 획득 시 보너스 점수
+      totalcardcnt: 0, //필요 1. default 점수 0 또는 -20 중 선택 2. 8개 카드 이상 획득 시 보너스 점수
     }
   },
   methods: {
     calScore() {
-      let score = this.sumscore * (this.investnums + 1)
-      let bonus = ( this.totalcardcnt >= 8 )? 20: 0
-      this.singleColor.score = score + bonus
-      // console.log("cal Score ", this.singleColor) //prop으로 들어온 object를 바꾸면 emit을 안해도 되게 됨.
-      // this.$emit('updateSingle', this.singleColor ) // {id: 0, name: "Yellow", score: 0} 자체를 리턴
+      if (this.totalcardcnt > 0){
+        let score = this.sumscore * (this.investnums + 1)
+        let bonus = ( this.totalcardcnt >= 8 )? 20: 0
+        this.singleColor.score = score + bonus
+        // console.log("cal Score ", this.singleColor) //prop으로 들어온 object를 바꾸면 emit을 안해도 되게 됨.
+        // this.$emit('updateSingle', this.singleColor ) // {id: 0, name: "Yellow", score: 0} 자체를 리턴
+      }
+      else {
+        this.singleColor.score = 0
+      }
     },
     updateSumScore(x) {
       this.sumscore += x;
@@ -82,8 +87,10 @@ export default {
       console.log("update Invest Card")
       if (!this.investcard[x].on) { //꺼진 카드를 켜준다. 즉 invest card 개수가 는다.
         this.investnums++;
+        this.totalcardcnt++;
       } else { //켜진 카드를 꺼준다.
         this.investnums--;
+        this.totalcardcnt--;
       }
 
       for (let i = 0; i < 3; i++) { // 투자 개수만큼 카드를 키고 나머지는 끈다.
@@ -109,10 +116,12 @@ export default {
 
       if (!this.numcard[x-2].on){
         this.numcard[x-2].on = true;
+        this.totalcardcnt++;
         this.updateSumScore(x)
       }
       else {
         this.numcard[x-2].on = false;
+        this.totalcardcnt--;
         this.updateSumScore(x * (-1))
       }
     }
@@ -128,20 +137,21 @@ export default {
     //   let cnt = 0
     //   return cnt
     // },
-    calTotalCardCnt(){
-      let cnt = 0
-      //count invest cards
-      for (let i = 0; i < 3; i++){
-        if (this.investcard[i].on) cnt++
-      }
-
-      //count num cards
-      for (let i = 0; i < 9; i++){
-        if (this.numcard[i].on) cnt++
-      }
-
-      return cnt
-    }
+  //   calTotalCardCnt(){
+  //     console.log("calTotalCardCnt")
+  //     let cnt = 0
+  //     //count invest cards
+  //     for (let i = 0; i < 3; i++){
+  //       if (this.investcard[i].on) cnt++
+  //     }
+  //
+  //     //count num cards
+  //     for (let i = 0; i < 9; i++){
+  //       if (this.numcard[i].on) cnt++
+  //     }
+  //
+  //     return cnt
+  //   }
   }
 }
 </script>
