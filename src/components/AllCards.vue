@@ -24,6 +24,9 @@ export default {
       msg: "test",
       colors: ["Yellow", "White", "Blue", "Green", "Red", "Purple"],
     }
+  },
+  methods: {
+
   }
 }
 </script>

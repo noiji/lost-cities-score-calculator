@@ -1,3 +1,4 @@
+<!-- 색깔 당 카드 (invest 1, 2, 3, num 2, 3, ... 10) -->
 <template>
   <div id = "section" :style="cssProps">
 
@@ -8,26 +9,26 @@
     </div>
     <div id = "cards">
       <ul>
-        <li v-if="investcard[0].display" @click="updateInvestCard(0)">
-          <a href="">
+        <button v-if="investcard[0].display" @click="updateInvestCard(0)" :key = "color.concat(investcard[0].name).concat(investcard[0].id).concat(investcard[0].display)">
+<!--          <a href="">-->
             {{ investcard[0].name }}
-          </a>
-        </li>
-        <li v-if="investcard[1].display" @click="updateInvestCard(1)">
-          <a href="">
+<!--          </a>-->
+        </button>
+        <button v-if="investcard[1].display" @click="updateInvestCard(1)" :key = "color.concat(investcard[0].name).concat(investcard[0].id)">
+<!--          <a href="">-->
             {{ investcard[1].name }}
-          </a>
-        </li>
-        <li v-if="investcard[2].display" @click="updateInvestCard(2)">
-          <a href="">
+<!--          </a>-->
+        </button>
+        <button v-if="investcard[2].display" @click="updateInvestCard(2)" :key = "color.concat(investcard[0].name).concat(investcard[0].id)">
+<!--          <a href="">-->
             {{ investcard[2].name }}
-          </a>
-        </li>
-        <li v-for="item in numcard" @click="item.updateNumCard" v-bind:key="item">
-          <a href="">
+<!--          </a>-->
+        </button>
+        <button v-for="item in numcard" @click="item.updateNumCard" v-bind:key="item">
+<!--          <a href="">-->
           {{ item.name }}
-          </a>
-        </li>
+<!--          </a>-->
+        </button>
         <br>
       </ul>
     </div>
@@ -66,37 +67,42 @@ export default {
     }
   },
   methods: {
-    changeInvestments(){
+    changeInvestments() {
       this.investnums++;
     },
-    toggleCard(){
+    calScore() {
+      console.log("cal Score");
     },
-    calScore(){
-
-    },
-    updateSumScore(x){
+    updateSumScore(x) {
       this.sumscore += x;
       console.log("sumscore: ", this.sumscore);
     },
-    updateInvestCard(x){ //앞 또는 뒤 카드의 display를 변경해줘야 한다.
-      if (!this.investcard[x].on){
-        this.investcard[x].on = true;
-        console.log("invest card: ", this.investcard[x].id);
-        if (x < 2){
-          console.log(this.investcard[this.id + 1]);
-          this.investcard[x + 1].display = true;
+    updateInvestCard(x) { //앞 또는 뒤 카드의 display를 변경해줘야 한다.
+      console.log("update Invest Card")
+      if (!this.investcard[x].on) { //꺼진 카드를 켜준다. 즉 invest card 개수가 는다.
+        this.investnums++;
+      } else { //켜진 카드를 꺼준다.
+        this.investnums--;
+      }
+
+      for (let i = 0; i < 3; i++) { // 투자 개수만큼 카드를 키고 나머지는 끈다.
+        if (i < this.investnums) {
+          this.investcard[i].on = this.investcard[i].display = true;
+        } else {
+          this.investcard[i].on = this.investcard[i].display = false;
         }
       }
-      else {
-        this.investcard[x].on = false;
-        console.log("invest card: ", this.investcard[x].id);
-        if (x > 0){
-          console.log(this.investcard[this.id - 1]);
-          this.investcard[x - 1].display = false;
-        }
+
+      if (this.investnums < 3) {
+        this.investcard[this.investnums].display = true; //꺼진 다음 카드가 보이게 한다.
+      }
+
+      for (let i = 0; i<3; i++){
+        console.log(this.investcard[i].id, this.investcard[i].name, this.investcard[i].on, this.investcard[i].display)
       }
     },
     updateNumCard(){
+      console.log("update Num Card")
       if (!this.on){
         this.on = true;
         this.updateSumScore(this.value)
