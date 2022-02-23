@@ -80,6 +80,15 @@ export default {
         return "Player 2 Wins!"
       }
     },
+    calSum(){
+      for (let idx = 0; idx < 2; idx++){
+        let sum = 0
+        for (let i = 0; i < 5; i++){
+          sum += this.players[idx].score[i]
+        }
+        this.players[idx].sum = sum;
+      }
+    },
     toggleExpand(){
       this.isExpand = !this.isExpand
       console.log("expand: ", this.isExpand)
@@ -88,7 +97,7 @@ export default {
       this.roundResultShown = !this.roundResultShown
       this.roundWinner = this.calRoundWinner()
       this.showConfetti()
-      //TODO: update to scoreboard
+      this.calSum()//total score
     },
     initRound(){
       this.roundResultShown = false
@@ -155,7 +164,7 @@ body{
 
 #result{
   min-height: 80px;/*display: block;*/
-  padding: 10px 5px;
+  padding: 10px 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -177,5 +186,10 @@ body{
   font-family: "Special Elite";
   color: white;
   font-weight: bold;
+
+}
+Scoreboard{
+
+  padding-left: 20px;
 }
 </style>

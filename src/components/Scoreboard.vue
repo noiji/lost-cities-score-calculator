@@ -37,10 +37,12 @@ export default {
 
 <style scoped>
 table{
-  width: 300px;
+  width: 90%;
   font-size: 15px;
   border: 5px solid #444444;
   border-collapse: collapse;
+
+
 }
 th, td{
   border: 2px solid white;
