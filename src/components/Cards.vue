@@ -3,9 +3,7 @@
   <div id = "section" :style="cssProps">
 
     <div id = "cardtitle">
-<!--      -->
      <h3>{{ singleColor.name }}</h3>
-<!--      <p> test</p>-->
     </div>
     <div id = "cards">
       <ul>
@@ -132,26 +130,7 @@ export default {
         '--card-color': this.singleColor.name,
         '--title-color': this.singleColor.name,
       }
-    },
-    // calNumCardCnt(){
-    //   let cnt = 0
-    //   return cnt
-    // },
-  //   calTotalCardCnt(){
-  //     console.log("calTotalCardCnt")
-  //     let cnt = 0
-  //     //count invest cards
-  //     for (let i = 0; i < 3; i++){
-  //       if (this.investcard[i].on) cnt++
-  //     }
-  //
-  //     //count num cards
-  //     for (let i = 0; i < 9; i++){
-  //       if (this.numcard[i].on) cnt++
-  //     }
-  //
-  //     return cnt
-  //   }
+    }
   }
 }
 </script>
@@ -159,6 +138,9 @@ export default {
 <style scoped>
 #section{
   color: var(--title-color);
+}
+#cards{
+  padding-bottom: 15px;
 }
 #cards ul{
   list-style-type: none;

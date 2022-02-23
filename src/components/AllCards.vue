@@ -56,4 +56,7 @@ export default {
 
 <style scoped>
 
+Cards {
+  padding-bottom: 20px;
+}
 </style>
