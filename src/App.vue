@@ -9,11 +9,12 @@
     <div id = "players">
       <div id = "player1">
         <h1>Player 1</h1>
-        <AllCards></AllCards>
+        <AllCards :player-idx = 0 @playerScore = "calParentPlayerScore"></AllCards>
+        <p :key = players>{{players[0].score[roundIdx]}}</p>
       </div>
       <div id = "player2">
         <h1>Player 2</h1>
-        <AllCards></AllCards>
+        <AllCards :player-idx = 1 @playerScore = "calParentPlayerScore"></AllCards>
       </div>
     </div>
     <div id="result">
@@ -31,6 +32,21 @@ export default {
   name: 'App',
   components: {
     AllCards
+  },
+  data(){
+    return {
+      roundIdx: 0,
+      players: [
+        {name: "player1", score: [0, 0, 0, 0, 0], },
+        {name: "player2", score: [0, 0, 0, 0, 0], },
+      ]
+    }
+  },
+  methods: {
+    calParentPlayerScore(player){ //player emitted from the child component
+      console.log("player score updated: ", player)
+      this.players[player.playerIdx].score[this.roundIdx] = player.playerScore;
+    }
   }
 }
 </script>

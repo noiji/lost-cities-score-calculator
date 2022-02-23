@@ -4,30 +4,28 @@
 
     <div id = "cardtitle">
 <!--      -->
-     <h3>{{ color }}</h3>
+     <h3>{{ singleColor.name }}</h3>
 <!--      <p> test</p>-->
     </div>
     <div id = "cards">
       <ul>
-        <button v-if="investcard[0].display" @click="updateInvestCard(0)" :key = "color.concat(investcard[0].name).concat(investcard[0].id).concat(investcard[0].display)">
-<!--          <a href="">-->
+        <!--각 element(혹은 component)에 key 값을 바인딩해주면 된다.
+        Vue에서는 HTML 요소의 key 값이 변경되는 경우 해당 요소를 업데이트한다. -->
+        <button v-if="investcard[0].display" @click="updateInvestCard(0)"
+                :key = "investcard" v-bind:class="{clickedButton: investcard[0].on}">
             {{ investcard[0].name }}
-<!--          </a>-->
         </button>
-        <button v-if="investcard[1].display" @click="updateInvestCard(1)" :key = "color.concat(investcard[0].name).concat(investcard[0].id)">
-<!--          <a href="">-->
+        <button v-if="investcard[1].display" @click="updateInvestCard(1)"
+                :key = "investcard" v-bind:class="{clickedButton: investcard[1].on}">
             {{ investcard[1].name }}
-<!--          </a>-->
         </button>
-        <button v-if="investcard[2].display" @click="updateInvestCard(2)" :key = "color.concat(investcard[0].name).concat(investcard[0].id)">
-<!--          <a href="">-->
+        <button v-if="investcard[2].display" @click="updateInvestCard(2)"
+                :key = "investcard" v-bind:class="{clickedButton: investcard[2].on}">
             {{ investcard[2].name }}
-<!--          </a>-->
         </button>
-        <button v-for="item in numcard" @click="item.updateNumCard" v-bind:key="item">
-<!--          <a href="">-->
+        <button v-for="item in numcard" @click="updateNumCard(item.value)"
+                :key="item" v-bind:class="{clickedButton: item.on}">
           {{ item.name }}
-<!--          </a>-->
         </button>
         <br>
       </ul>
@@ -41,13 +39,13 @@
 export default {
   name: "Cards",
   props: {
-    color: String,
+    singleColor: Object, //{id: 0, name: "Yellow", score: 0},
   },
   data() {
     return {
       investnums: 0,
       sumscore: -20,
-      returnscore: 0,
+      returnscore: 0, // 이 점수를 emit으로 보내줘야 함
       investcard: [
         {id: 0, name: '§', on: false, display: true},
         {id: 1, name: '§', on: false, display: false},
@@ -67,15 +65,16 @@ export default {
     }
   },
   methods: {
-    changeInvestments() {
-      this.investnums++;
-    },
     calScore() {
-      console.log("cal Score");
+      // this.returnscore = this.sumscore * (this.investnums + 1)
+      this.singleColor.score = this.sumscore * (this.investnums + 1)
+      // console.log("cal Score ", this.singleColor) //prop으로 들어온 object를 바꾸면 emit을 안해도 되는건가?
+      this.$emit('updateSingle', this.singleColor ) // {id: 0, name: "Yellow", score: 0} 자체를 리턴
     },
     updateSumScore(x) {
       this.sumscore += x;
-      console.log("sumscore: ", this.sumscore);
+      console.log(this.color, " sumscore: ", this.sumscore);
+      this.calScore();
     },
     updateInvestCard(x) { //앞 또는 뒤 카드의 display를 변경해줘야 한다.
       console.log("update Invest Card")
@@ -98,46 +97,57 @@ export default {
       }
 
       for (let i = 0; i<3; i++){
-        console.log(this.investcard[i].id, this.investcard[i].name, this.investcard[i].on, this.investcard[i].display)
+        console.log(this.color, this.investcard[i].id, this.investcard[i].name, this.investcard[i].on, this.investcard[i].display)
       }
+
+      this.calScore()
     },
-    updateNumCard(){
+    updateNumCard(x){
       console.log("update Num Card")
-      if (!this.on){
-        this.on = true;
-        this.updateSumScore(this.value)
+
+      if (!this.numcard[x-2].on){
+        this.numcard[x-2].on = true;
+        this.updateSumScore(x)
       }
       else {
-        this.on = false;
-        this.updateSumScore(this.value * (-1))
+        this.numcard[x-2].on = false;
+        this.updateSumScore(x * (-1))
       }
     }
   },
   computed: {
     cssProps(){
       return {
-        '--card-color': this.color,
+        '--card-color': this.singleColor.name,
+        '--title-color': this.singleColor.name,
       }
     }
+
   }
 }
 </script>
 
 <style scoped>
 #section{
-  color: var(--card-color);
+  color: var(--title-color);
 }
 #cards ul{
   list-style-type: none;
   margin: 0; /* these two make the list align left */
   padding: 0;
 }
-#cards li{
+#cards button{
   float: left; /*  리스트를 가로로 정렬*/
-  /*height: 30px;*/
-  background-color: var(--card-color);
   border-color: var(--card-color);
   padding: 10px;
+  font-family: "Special Elite";
+  border-radius: 20%;
+  margin: 3px;
+  font-size: 20px;
+}
+#cards button:not(.clickedButton){
+  background-color: black;
+  color: white;
 }
 #cards li a{
   text-decoration: none; /* remove link underline */
@@ -146,5 +156,10 @@ export default {
 }
 #cards li a:hover {
   background-color: white;
+}
+.clickedButton{
+  background-color: var(--card-color);
+  color: black;
+  font-weight: bold;
 }
 </style>
