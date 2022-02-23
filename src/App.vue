@@ -35,7 +35,7 @@
       </div>
     </div>
     <div id="totalresult">
-      <Scoreboard :players = players></Scoreboard>
+      <Scoreboard :players = players :key="roundWinner"></Scoreboard>
     </div>
   </body>
 </template>
@@ -111,7 +111,7 @@ export default {
 <style >
 @import './style.css';
 body{
-  width: 520px;
+  /*width: 520px;*/
   float: left;
 }
 #app {
@@ -124,6 +124,7 @@ body{
 }
 #title{
   font-family: Permanent Marker ;
+  font-size: 13px;
 }
 #gamemode{
   font-family: "Source Sans Pro" ;
@@ -154,7 +155,9 @@ body{
 
 #result{
   min-height: 80px;/*display: block;*/
-  padding: 10px 80px;
+  padding: 10px 5px;
+  display: flex;
+  justify-content: center;
   align-items: center;
 }
 .roundScore{

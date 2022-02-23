@@ -13,8 +13,6 @@
 
 <script>
 import Cards from "./Cards.vue"
-//TODO
-//색깔별 점수 총합 후 App에 넘기기
 export default {
   name: "AllCards",
   components: {
