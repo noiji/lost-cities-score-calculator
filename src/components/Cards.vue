@@ -45,7 +45,6 @@ export default {
     return {
       investnums: 0,
       sumscore: -20,
-      returnscore: 0, // 이 점수를 emit으로 보내줘야 함
       investcard: [
         {id: 0, name: '§', on: false, display: true},
         {id: 1, name: '§', on: false, display: false},
@@ -61,15 +60,18 @@ export default {
             {value: 8, name: '8', on: false,},
             {value: 9, name: '9', on: false,},
             {value: 10, name: '10', on: false,},
-          ],
+      ],
+      // numcardcnt: this.calNumCardCnt, //
+      totalcardcnt: this.calTotalCardCnt, //필요 1. default 점수 0 또는 -20 중 선택 2. 8개 카드 이상 획득 시 보너스 점수
     }
   },
   methods: {
     calScore() {
-      // this.returnscore = this.sumscore * (this.investnums + 1)
-      this.singleColor.score = this.sumscore * (this.investnums + 1)
-      // console.log("cal Score ", this.singleColor) //prop으로 들어온 object를 바꾸면 emit을 안해도 되는건가?
-      this.$emit('updateSingle', this.singleColor ) // {id: 0, name: "Yellow", score: 0} 자체를 리턴
+      let score = this.sumscore * (this.investnums + 1)
+      let bonus = ( this.totalcardcnt >= 8 )? 20: 0
+      this.singleColor.score = score + bonus
+      // console.log("cal Score ", this.singleColor) //prop으로 들어온 object를 바꾸면 emit을 안해도 되게 됨.
+      // this.$emit('updateSingle', this.singleColor ) // {id: 0, name: "Yellow", score: 0} 자체를 리턴
     },
     updateSumScore(x) {
       this.sumscore += x;
@@ -116,13 +118,30 @@ export default {
     }
   },
   computed: {
-    cssProps(){
+    cssProps() {
       return {
         '--card-color': this.singleColor.name,
         '--title-color': this.singleColor.name,
       }
-    }
+    },
+    // calNumCardCnt(){
+    //   let cnt = 0
+    //   return cnt
+    // },
+    calTotalCardCnt(){
+      let cnt = 0
+      //count invest cards
+      for (let i = 0; i < 3; i++){
+        if (this.investcard[i].on) cnt++
+      }
 
+      //count num cards
+      for (let i = 0; i < 9; i++){
+        if (this.numcard[i].on) cnt++
+      }
+
+      return cnt
+    }
   }
 }
 </script>
