@@ -16,26 +16,29 @@
     <div id = "players">
       <div id = "player1">
         <h1>Player 1</h1>
-        <AllCards :player-idx = 0 :is-expand = "isExpand" @playerScore = "calParentPlayerScore"></AllCards>
+        <AllCards :player-idx = 0 :is-expand = "isExpand"
+                  @playerScore = "calParentPlayerScore" ref="allCards1"></AllCards>
       </div>
       <div id = "player2">
         <h1>Player 2</h1>
-        <AllCards :player-idx = 1 :is-expand = "isExpand" @playerScore = "calParentPlayerScore"></AllCards>
+        <AllCards :player-idx = 1 :is-expand = "isExpand"
+                  @playerScore = "calParentPlayerScore" ref="allCards2"></AllCards>
       </div>
     </div>
     <div id="result">
       <button id="showResultButton" v-if="!roundResultShown" @click="showRoundResult">Show Result</button>
       <div id="resultDetail" v-if="roundResultShown">
         <p>ROUND {{roundIdx + 1}}: {{roundWinner}}</p>
+        <p>
         <span class="roundScore">{{players[0].score[roundIdx]}}</span>
         <span class="versus">vs</span>
         <span class="roundScore">{{players[1].score[roundIdx]}}</span>
-        <br>
+        </p>
         <button id="nextButton" v-if="roundIdx < 4" @click="nextRound">NEXT ROUND</button>
       </div>
     </div>
     <div id="totalresult">
-      <Scoreboard :players = players :key="roundWinner"></Scoreboard>
+      <Scoreboard :players = players :key="'scoreBoard' + roundWinner"></Scoreboard>
     </div>
   </body>
 </template>
@@ -67,7 +70,7 @@ export default {
   },
   methods: {
     calParentPlayerScore(player){ //player emitted from the child component
-      console.log("player score updated: ", player)
+      // console.log("player score updated: ", player)
       this.players[player.playerIdx].score[this.roundIdx] = player.playerScore;
     },
     calRoundWinner(){
@@ -99,9 +102,16 @@ export default {
       this.showConfetti()
       this.calSum()//total score
     },
+    resetAppCards(){
+      console.log("Player 1 resetCard")
+      this.$refs.allCards1.resetAllCards()
+      console.log("Player 2 resetCard")
+      this.$refs.allCards2.resetAllCards()
+    },
     initRound(){
       this.roundResultShown = false
       //TODO: 클릭된 카드 클릭 해제
+      this.resetAppCards()
     },
     nextRound(){
       this.roundIdx++
@@ -113,14 +123,18 @@ export default {
   },
   computed:{
 
-  }
+  },
 }
 </script>
 
 <style >
 @import './style.css';
+template{
+  background-color: black;
+}
 body{
   /*width: 520px;*/
+  background-color: black;
   float: left;
 }
 #app {
@@ -132,42 +146,38 @@ body{
   margin-top: 60px;
 }
 #title{
-  font-family: Permanent Marker ;
-  font-size: 13px;
+  font-family: Bangers ;
+  font-size: 18px;
 }
 #gamemode{
-  font-family: "Source Sans Pro" ;
+  font-family: Bangers ;
   font-weight: bold;
-  font-style: italic;
-  font-size: 20px;
+  font-size: 25px;
   padding-bottom: 10px;
 }
-#options a{
+#gamemode a{
   padding-right: 8px;
 }
 #roundInfo{
-  font-family: "Permanent Marker";
-  font-weight: bold;
+  font-family: Bangers;
   font-size: 30px;
 }
 .exbutton{
-  background-color: antiquewhite;
-  padding: 3px;
+  background-color: white;
   border-radius: 5%;
-  font-family: "Source Sans Pro" ;
-  font-weight: bold;
-  font-size: 15px;
+  font-family: "Bangers" ;
+  /*font-weight: bold;*/
+  font-size: 20px;
+  color: grey;
 }
 .active{
   background-color: limegreen;
+  color: black;
 }
 
 #result{
   min-height: 80px;/*display: block;*/
   padding: 10px 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 .roundScore{
   font-size: 80px;
@@ -177,7 +187,11 @@ body{
 }
 #player1, #player2{
   font-size: 12px;
-  padding: 0 0 15px 0;
+}
+#resultDetail p{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 #showResultButton, #nextButton{
   width: 160px;
@@ -186,7 +200,7 @@ body{
   font-family: "Special Elite";
   color: white;
   font-weight: bold;
-
+  margin-left: 100px;
 }
 Scoreboard{
 

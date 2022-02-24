@@ -11,12 +11,12 @@
     </tr>
     <tr>
       <td>Player 1</td>
-      <td v-for="score in players[0].score" :key="score">{{score}}</td>
+      <td v-for="i in 5" :key="'player 1:' + i">{{players[0].score[i-1]}}</td>
       <td>{{players[0].sum}}</td>
     </tr>
     <tr>
       <td>Player 2</td>
-      <td v-for="score in players[1].score" :key="score">{{score}}</td>
+      <td v-for="i in 5" :key="'player 2:' + i">{{players[1].score[i-1]}}</td>
       <td>{{players[1].sum}}</td>
     </tr>
   </table>

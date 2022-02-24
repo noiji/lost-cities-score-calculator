@@ -3,26 +3,26 @@
   <div id = "section" :style="cssProps">
 
     <div id = "cardtitle">
-     <h3>{{ singleColor.name }} : {{singleColor.score}}</h3>
+     {{ singleColor.name }} : {{singleColor.score}}
     </div>
     <div id = "cards">
       <ul>
         <!--각 element(혹은 component)에 key 값을 바인딩해주면 된다.
         Vue에서는 HTML 요소의 key 값이 변경되는 경우 해당 요소를 업데이트한다. -->
         <button v-if="investcard[0].display" @click="updateInvestCard(0)"
-                :key = "investcard" v-bind:class="{clickedButton: investcard[0].on}">
+                :key = "investcard[0].id + investcard[0].name + investcard[0].on" v-bind:class="{clickedButton: investcard[0].on}">
             {{ investcard[0].name }}
         </button>
         <button v-if="investcard[1].display" @click="updateInvestCard(1)"
-                :key = "investcard" v-bind:class="{clickedButton: investcard[1].on}">
+                :key = "investcard[1].id + investcard[1].name + investcard[1].on" v-bind:class="{clickedButton: investcard[1].on}">
             {{ investcard[1].name }}
         </button>
         <button v-if="investcard[2].display" @click="updateInvestCard(2)"
-                :key = "investcard" v-bind:class="{clickedButton: investcard[2].on}">
+                :key = "investcard[2].id + investcard[2].name + investcard[2].on" v-bind:class="{clickedButton: investcard[2].on}">
             {{ investcard[2].name }}
         </button>
         <button v-for="item in numcard" @click="updateNumCard(item.value)"
-                :key="item" v-bind:class="{clickedButton: item.on}">
+                :key="item.name + item.on" v-bind:class="{clickedButton: item.on}">
           {{ item.name }}
         </button>
         <br>
@@ -37,7 +37,8 @@
 export default {
   name: "Cards",
   props: {
-    singleColor: Object, //{id: 0, name: "Yellow", score: 0},
+    singleColor: Object, //{id: 0, name: "Yellow", score: 0, isInit: false},
+    // isInit: Boolean,
   },
   data() {
     return {
@@ -59,18 +60,30 @@ export default {
             {value: 9, name: '9', on: false,},
             {value: 10, name: '10', on: false,},
       ],
-      // numcardcnt: this.calNumCardCnt, //
       totalcardcnt: 0, //필요 1. default 점수 0 또는 -20 중 선택 2. 8개 카드 이상 획득 시 보너스 점수
     }
   },
   methods: {
+    resetCards(){
+      console.log(this.singleColor.name, ': reset')
+      for (let i = 0; i < 3; i++) {
+        this.investcard[i].on = false;
+        this.investcard[i].display = (i === 0);
+      }
+      for (let i = 2; i <= 10; i++) {
+        this.numcard[i-2].on = false;
+      }
+      this.investnums = 0
+      this.totalcardcnt = 0
+      this.sumscore = -20
+      this.singleColor.score = 0
+    },
     calScore() {
       if (this.totalcardcnt > 0){
         let score = this.sumscore * (this.investnums + 1)
         let bonus = ( this.totalcardcnt >= 8 )? 20: 0
         this.singleColor.score = score + bonus
-        // console.log("cal Score ", this.singleColor) //prop으로 들어온 object를 바꾸면 emit을 안해도 되게 됨.
-        // this.$emit('updateSingle', this.singleColor ) // {id: 0, name: "Yellow", score: 0} 자체를 리턴
+        // this.$emit('updateSingle', this.singleColor ) // prop으로 들어온 object를 바꾸면 emit을 안해도 되게 됨.
       }
       else {
         this.singleColor.score = 0
@@ -78,7 +91,6 @@ export default {
     },
     updateSumScore(x) {
       this.sumscore += x;
-      console.log(this.color, " sumscore: ", this.sumscore);
       this.calScore();
     },
     updateInvestCard(x) { //앞 또는 뒤 카드의 display를 변경해줘야 한다.
@@ -90,7 +102,6 @@ export default {
         this.investnums--;
         this.totalcardcnt--;
       }
-
       for (let i = 0; i < 3; i++) { // 투자 개수만큼 카드를 키고 나머지는 끈다.
         if (i < this.investnums) {
           this.investcard[i].on = this.investcard[i].display = true;
@@ -98,15 +109,9 @@ export default {
           this.investcard[i].on = this.investcard[i].display = false;
         }
       }
-
       if (this.investnums < 3) {
         this.investcard[this.investnums].display = true; //꺼진 다음 카드가 보이게 한다.
       }
-
-      for (let i = 0; i<3; i++){
-        console.log(this.color, this.investcard[i].id, this.investcard[i].name, this.investcard[i].on, this.investcard[i].display)
-      }
-
       this.calScore()
     },
     updateNumCard(x){
@@ -130,14 +135,15 @@ export default {
         '--card-color': this.singleColor.name,
         '--title-color': this.singleColor.name,
       }
-    }
-  }
+    },
+  },
 }
 </script>
 
 <style scoped>
 #section{
   color: var(--title-color);
+  margin-bottom: 30px;
 }
 #cards{
   padding-bottom: 4px;
@@ -169,7 +175,10 @@ export default {
   background-color: white;
 }
 #cardtitle{
-  font-size: 15px;
+  font-size: 20px;
+  padding-bottom: 5px;
+  font-family: Bangers;
+  /*font-weight: bold;*/
 }
 .clickedButton{
   background-color: var(--card-color);

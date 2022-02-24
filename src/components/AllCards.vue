@@ -1,12 +1,16 @@
 <template>
   <div>
     <div v-if="isExpand">
-      <Cards v-for="cardStack in allColor" :key = "cardStack" :single-color="cardStack"
-             @change="updatePlayerScore"></Cards>
+      <Cards v-for="cardStack in allColor"
+             :key = "'expand' + playerIdx + cardStack.name"
+             :single-color="cardStack"
+             @change="updatePlayerScore" ref="cardStack"></Cards>
     </div>
     <div v-else>
-      <Cards v-for="cardStack in allColor.slice(0, 5)" :key = "cardStack" :single-color="cardStack"
-             @change="updatePlayerScore"></Cards>
+      <Cards v-for="cardStack in allColor.slice(0,5)"
+             :key = "'expand' + playerIdx + cardStack.name"
+             :single-color="cardStack"
+             @change="updatePlayerScore" ref="cardStack"></Cards>
     </div>
   </div>
 </template>
@@ -37,6 +41,12 @@ export default {
     }
   },
   methods:{
+    resetAllCards(){
+      let len = this.isExpand? 6: 5
+      for (let i = 0; i < len; i++){
+        this.$refs.cardStack[i].resetCards();
+      }
+    }
   },
   computed: {
     updatePlayerScore() {
@@ -54,7 +64,4 @@ export default {
 
 <style scoped>
 
-Cards {
-  padding-bottom: 20px;
-}
 </style>
