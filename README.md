@@ -30,7 +30,8 @@
 ## Key Features
 
   1. Expansion Pack Support
-<p align="center"><img src = "https://user-images.githubusercontent.com/52301388/155471973-fa10ab6f-9496-4885-8f36-6cdd60b1fc04.png" width="300" align=center> </img></p>
+
+<p align="center"><img src = "https://user-images.githubusercontent.com/52301388/155473010-5bd1a724-9a11-4370-a4ff-8e5c2db266ae.gif" width="300" align=center> </img></p>
 
 - It has been so bothering to calculate the extra score for purple cards, no? Now it supports the expanded mode.  
 
