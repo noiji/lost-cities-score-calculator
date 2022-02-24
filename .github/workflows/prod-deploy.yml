@@ -2,7 +2,7 @@ name: prod-deploy-actions
 on:
   push:
     branches:
-      - main
+      - master
 # permissions:
 #   id-token: write
 #   contents: read
