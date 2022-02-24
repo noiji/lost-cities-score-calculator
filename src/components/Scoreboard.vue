@@ -37,9 +37,9 @@ export default {
 
 <style scoped>
 table{
-  width: 90%;
-  font-size: 15px;
-  border: 5px solid #444444;
+  width: 100%;
+  font-size: 18px;
+  border: 5px solid white;
   border-collapse: collapse;
 
 

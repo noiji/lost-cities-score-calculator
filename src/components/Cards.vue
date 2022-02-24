@@ -161,6 +161,7 @@ export default {
   border-radius: 20%;
   margin: 1px;
   font-size: 15px;
+  height: 45px;
 }
 #cards button:not(.clickedButton){
   background-color: black;

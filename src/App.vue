@@ -26,13 +26,11 @@
       </div>
     </div>
     <div id="result">
-      <button id="showResultButton" v-if="!roundResultShown" @click="showRoundResult">Show Result</button>
+      <button id="showResultButton" v-if="!roundResultShown" @click="showRoundResult">Show the Result</button>
       <div id="resultDetail" v-if="roundResultShown">
-        <p>ROUND {{roundIdx + 1}}: {{roundWinner}}</p>
+        <div id="resultTitle">ROUND {{roundIdx + 1}}: {{roundWinner}}</div>
         <p>
-        <span class="roundScore">{{players[0].score[roundIdx]}}</span>
-        <span class="versus">vs</span>
-        <span class="roundScore">{{players[1].score[roundIdx]}}</span>
+        <span class="roundScore">{{players[0].score[roundIdx]}} : {{players[1].score[roundIdx]}}</span>
         </p>
         <button id="nextButton" v-if="roundIdx < 4" @click="nextRound">NEXT ROUND</button>
       </div>
@@ -174,13 +172,13 @@ body{
   background-color: limegreen;
   color: black;
 }
-
 #result{
   min-height: 80px;/*display: block;*/
   padding: 10px 0;
+  font-family: Bangers;
 }
 .roundScore{
-  font-size: 80px;
+  font-size: 100px;
   padding: 0 10px;
   color: dodgerblue;
   font-weight: bold;
@@ -197,13 +195,17 @@ body{
   width: 160px;
   background-color: dodgerblue;
   height: 30px;
-  font-family: "Special Elite";
+  font-family: Bangers;
+  font-size: 20px;
   color: white;
-  font-weight: bold;
+  border-radius: 5%;
   margin-left: 100px;
 }
 Scoreboard{
-
   padding-left: 20px;
+}
+#resultTitle{
+  font-size: 40px;
+  text-align: center;
 }
 </style>
