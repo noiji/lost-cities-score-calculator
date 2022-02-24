@@ -33,7 +33,7 @@
 
 <p align="center"><img src = "https://user-images.githubusercontent.com/52301388/155473010-5bd1a724-9a11-4370-a4ff-8e5c2db266ae.gif" width="300" align=center> </img></p>
 
-- It has been so bothering to calculate the extra score for purple cards, no? Now it supports the expanded mode.  
+- It has been so bothering to calculate the extra score for purple cards, no? Now it supports the expanded mode!  
 
 2. Responsive Cards
 <p align="center"><img src = "https://user-images.githubusercontent.com/52301388/155470790-b40519ed-6b0b-45ef-a974-77c864bf72fc.gif" width="300" align=center> </img></p>
@@ -44,12 +44,12 @@
  3. Scoreboard
 <p align="center"><img src = "https://user-images.githubusercontent.com/52301388/155471017-c5e5c332-5f2a-43da-880b-5447b495b100.png" width="300" align=center> </img></p>
 
-- The scoreboard feature will free you from having to remember all your scores! 
+- This scoreboard feature will free you from having to remember all your scores! 
 
 
 ## Annnd... a Cute Feature
 <p align="center"><img src = "https://user-images.githubusercontent.com/52301388/155471702-f551b2bf-7ca1-43c2-9a06-33f014be50f9.gif" width="300" align=center> </img></p>
-- After each round, the program celebrates the end of the game with a shower of confetti.
+- After each round, the program celebrates the end of the game with a shower of unicorns, rainbows, ... all those fancy cutie things.
 
 ### Built With
 
