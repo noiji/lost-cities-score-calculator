@@ -20,7 +20,7 @@
 ## About The Project
 
 - The score calculator for "Lost Cities" which supports expansion pack and the scoreboard of you and your counterpart.
-- Demo: http://lostcities.noiji.net
+- Demo: http://lostcities.s3-website.ap-northeast-2.amazonaws.com (temp)
 - DevLog(KOR): https://noeasylog.tistory.com/category/Projects/%EB%A1%9C%EC%8A%A4%ED%8A%B8%20%EC%8B%9C%ED%8B%B0%20%EC%A0%90%EC%88%98%20%EA%B3%84%EC%82%B0%EA%B8%B0
 
 - "Lost Cities" is a card game where you have to calculate your score with quite complex rules. If interested, you can see the detailed information below.
